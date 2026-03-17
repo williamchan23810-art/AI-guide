@@ -3,70 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Guide Landing Page</title>
+  <title>AI Guide</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 2rem;
-      background-color: #f9f9f9;
-      color: #333;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+      background: #f9f9f9;
     }
     header {
-      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
       margin-bottom: 2rem;
     }
-    section {
-      background: white;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    header img {
+      width: 48px;
+      height: 48px;
     }
-    h1, h2 {
-      color: #0078d4;
-    }
-    a {
-      color: #0078d4;
+    nav a {
+      display: inline-block;
+      margin-right: 1.5rem;
       text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .data-link {
+      color: #0078d4;
       font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Welcome to AI Guide</h1>
-    <p>Your resource for AI sectors, tools, and data integration.</p>
+    <!-- Replace 'path/to/ai-icon.png' with your actual AI icon image path -->
+    <img src="path/to/ai-icon.png" alt="AI Icon" />
+    <h1>Welcome to the AI Guide</h1>
   </header>
 
-  <section id="about">
-    <h2>About This Project</h2>
-    <p>This project is organized into multiple branches for clarity:</p>
-    <ul>
-      <li><strong>Main branch:</strong> Contains the website code including this landing page.</li>
-      <li><strong>Image branch:</strong> Stores all image assets used in the project.</li>
-      <li><strong>Data branch:</strong> Contains data files such as CSV exports from Google Sheets.</li>
-    </ul>
-  </section>
+  <nav>
+    <a href="datasheet.html">Datasheet</a>
+    <a href="ai-websites.html">AI Websites</a>
+  </nav>
 
-  <section id="data">
-    <h2>Google Sheets Data</h2>
-    <p>
-      The latest data from our Google Sheets is exported as a CSV file and stored in the <code>data/</code> folder of the Data branch.
-      You can access the raw CSV file here:
-      <a class="data-link" href="https://github.com/yourusername/yourrepo/blob/Data/data/yourfile.csv" target="_blank" rel="noopener noreferrer">Download CSV from GitHub</a>
-    </p>
-    <p>
-      This CSV data can be dynamically loaded and displayed on the site using JavaScript or backend processing.
-    </p>
+  <section>
+    <p>Explore the world of artificial intelligence through our curated resources and guides.</p>
   </section>
-
-  <footer>
-    <p>© 2024 AI Guide Project</p>
-  </footer>
 </body>
 </html>
