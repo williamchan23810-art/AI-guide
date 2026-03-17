@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Guide - AI Websites</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background-color: #004aad;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    header img {
+      height: 40px;
+      width: auto;
+    }
+    header h1 {
+      margin: 0;
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+    main {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .category-section {
+      margin-bottom: 3rem;
+    }
+    .category-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #004aad;
+      padding-bottom: 0.3rem;
+    }
+    .icons-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .icon-link {
+      display: block;
+      width: 64px;
+      height: 64px;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+    .icon-link:hover {
+      transform: scale(1.1);
+    }
+    .icon-link img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/ai-guide-logo.png" alt="AI Guide Logo" />
+    <h1>AI Guide - AI Websites</h1>
+  </header>
+  <main>
+    <div id="content">Loading AI websites...</div>
+  </main>
+
+  <script>
+    // Replace this URL with your actual published CSV URL
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhLJjC48YfJR3JfDtsLBsP_npi1XdXoF_nlBylIv5F-gkFL4ayprtcGShRCKZMOhhoSCxkjyeSXMZ8/pub?gid=0&single=true&output=csv
+';
+
+    // Utility: Parse CSV text into array of objects
+    function parseCSV(text) {
+      const lines = text.trim().split('\\n');
+      const headers = lines[0].split(',').map(h => h.trim());
+      return lines.slice(1).map(line => {
+        const values = line.split(',').map(v => v.trim());
+        const obj = {};
+        headers.forEach((header, i) => {
+          obj[header] = values[i] || '';
+        });
+        return obj;
+      });
+    }
+
+    // Group items by category
+    function groupByCategory(items) {
+      return items.reduce((acc, item) => {
+        const cat = item['Category'] || 'Uncategorized';
+        if (!acc[cat]) acc[cat] = [];
+        acc[cat].push(item);
+        return acc;
+      }, {});
+    }
+
+    // Render grouped icons
+    function renderCategories(categories) {
+      const container = document.getElementById('content');
+      container.innerHTML = '';
+
+      for (const [category, items] of Object.entries(categories)) {
+        const section = document.createElement('section');
+        section.className = 'category-section';
+
+        const title = document.createElement('h2');
+        title.className = 'category-title';
+        title.textContent = category;
+        section.appendChild(title);
+
+        const iconsDiv = document.createElement('div');
+        iconsDiv.className = 'icons-container';
+
+        items.forEach(item => {
+          const link = document.createElement('a');
+          link.href = item['Weblink to the AI App'];
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.className = 'icon-link';
+          link.title = item['Name of AI App'];
+
+          const img = document.createElement('img');
+          img.src = item['Icon'];
+          img.alt = item['Name of AI App'];
+
+          link.appendChild(img);
+          iconsDiv.appendChild(link);
+        });
+
+        section.appendChild(iconsDiv);
+        container.appendChild(section);
+      }
+    }
+
+    // Fetch CSV and render
+    fetch(csvUrl)
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.text();
+      })
+      .then(csvText => {
+        const data = parseCSV(csvText);
+        const grouped = groupByCategory(data);
+        renderCategories(grouped);
+      })
+      .catch(error => {
+        document.getElementById('content').textContent = 'Failed to load AI websites data.';
+        console.error('Error loading CSV:', error);
+      });
+  </script>
+</body>
+</html>
